@@ -12,12 +12,12 @@ aws s3 ls
 
 # Print list of EC2 instances
 echo "List of EC2 Instances:"
-aws ec2 describe-instances
+aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId]" --output text
 
 # Print list of Lambda functions
 echo "List of Lambda Functions:"
-aws lambda list-functions 
+aws lambda list-functions --query "Functions[*].FunctionName" --output text
 
 # Print list of IAM users
 echo "List of IAM Users:"
-aws iam list-users
+aws iam list-users --query "Users[*].UserName" --output text
