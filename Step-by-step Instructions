@@ -1,0 +1,38 @@
+Step-by-Step Project Details
+  Step 1: Setup
+  Install AWS CLI: Ensure you have AWS CLI installed on your machine.
+ - aws --version
+
+  Configure AWS CLI: Authenticate with your AWS account
+ - aws configure
+  Input your AWS access key, secret access key, default region, and output format.
+
+  Step 2: Create the Shell Script
+  Create a script file: Create a new file for your script
+ - vim aws_resource_tracker.sh
+
+**Explanation:
+ #!/bin/bash: Specifies the script should be run with Bash.
+ aws s3 ls: Lists all S3 buckets.
+ aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId]" --output text: Lists all EC2 instance IDs.
+ aws lambda list-functions --query "Functions[*].FunctionName" --output text: Lists all Lambda function names.
+ aws iam list-users --query "Users[*].UserName" --output text: Lists all IAM user names.
+
+ Make the Script Executable
+ - chmod +x aws_resource_tracker.sh
+
+ Test and run the Script
+ - ./aws_resource_tracker.sh
+
+ Scheduling the Script
+ To schedule the script to run daily, use a cron job:
+ - crontab -e
+
+ Add a Cron Job
+ To schedule the script to run daily at 6 PM:
+ - 0 18 * * * /path/to/aws_resource_tracker.sh >> /path/to/resource_tracker_report.txt 2>&1
+
+Explanation:
+*  0 18 * * *: Runs the script every day at 6 PM.
+* /path/to/aws_resource_tracker.sh: Path to your script.
+* >> /path/to/resource_tracker_report.txt 2>&1: Redirects both stdout and stderr to a file.
